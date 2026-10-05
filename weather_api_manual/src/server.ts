@@ -1,4 +1,4 @@
-import app from './app'
+import app from './app.js'
 import "dotenv/config";
 
 const PORT: number = Number(process.env.WEATHER_PORT || 3000)
