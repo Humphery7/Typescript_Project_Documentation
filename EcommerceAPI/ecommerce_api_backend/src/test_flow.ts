@@ -88,7 +88,7 @@ async function runTests() {
 
         // 5. Test Checkout and Payment Flow
         console.log("\n5. Testing Checkout & Payment Flow...");
-        const checkoutResult = await checkoutAndPay(userId, { paymentMethod: "credit_card" });
+        const checkoutResult = await checkoutAndPay(userId, { currency: "usd" });
         console.log("✓ Checkout completed!");
         console.log(`✓ Order ID: ${checkoutResult.order.id}, Status: ${checkoutResult.order.status}, Total: $${checkoutResult.order.total_amount}`);
         console.log(`✓ Order items count: ${checkoutResult.items.length}`);

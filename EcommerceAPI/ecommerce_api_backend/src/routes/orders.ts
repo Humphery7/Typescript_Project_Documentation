@@ -16,8 +16,8 @@ router.post("/checkout", async (req: Request, res: Response, next: NextFunction)
             throw new AppError("Unauthorized", 401);
         }
 
-        const { paymentMethod, cardNumber, simulateFailure } = req.body;
-        const result = await checkoutAndPay(userId, { paymentMethod, cardNumber, simulateFailure });
+        const { currency } = req.body;
+        const result = await checkoutAndPay(userId, { currency });
 
         res.status(201).json({
             message: "Order placed and payment processed successfully",

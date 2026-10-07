@@ -46,10 +46,10 @@ function generateProducts(count: number) {
     const products: { name: string; price: number; description: string; inventory: number }[] = [];
 
     for (let i = 1; i <= count; i++) {
-        const cat = categories[i % categories.length];
-        const brand = brandPrefixes[(i * 7) % brandPrefixes.length];
-        const adj = cat.adjectives[(i * 3) % cat.adjectives.length];
-        const item = cat.items[(i * 5) % cat.items.length];
+        const cat = categories[i % categories.length]!;
+        const brand = brandPrefixes[(i * 7) % brandPrefixes.length]!;
+        const adj = cat.adjectives[(i * 3) % cat.adjectives.length]!;
+        const item = cat.items[(i * 5) % cat.items.length]!;
 
         // Ensure name fits within 50 characters (since schema uses VARCHAR(50))
         let rawName = `${brand} ${adj} ${item}`;
