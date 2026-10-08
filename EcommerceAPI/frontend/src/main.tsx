@@ -1,16 +1,17 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import App from "./App";
-import { ToastProvider } from "./context/Toast";
-import { AuthProvider } from "./context/Auth";
-import { CartProvider } from "./context/Cart";
+import "@fontsource-variable/hanken-grotesk/index.css";
 import "./styles.css";
+import App from "./App";
+import { Providers } from "./Providers";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <ToastProvider><AuthProvider><CartProvider><App /></CartProvider></AuthProvider></ToastProvider>
+      <Providers>
+        <App />
+      </Providers>
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );

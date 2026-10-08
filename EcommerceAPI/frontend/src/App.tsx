@@ -1,29 +1,58 @@
-import { Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
-import Guard from "./components/Guard";
-import Home from "./pages/Home";
-import ProductPage from "./pages/Product";
+import { useEffect } from "react";
+import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
+import { RequireAuth } from "./components/RequireAuth";
+import { ServerStatus } from "./components/ServerStatus";
 import AuthPage from "./pages/Auth";
-import CartPage from "./pages/Cart";
-import { OrderDetail, OrderList } from "./pages/Orders";
-import { Cancel, Success } from "./pages/Result";
-import StockDesk from "./pages/Stock";
+import Bag from "./pages/Bag";
+import Cancel from "./pages/Cancel";
+import NewProduct from "./pages/NewProduct";
 import NotFound from "./pages/NotFound";
+import OrderDetail from "./pages/OrderDetail";
+import Orders from "./pages/Orders";
+import ProductPage from "./pages/Product";
+import Shop from "./pages/Shop";
+import Success from "./pages/Success";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function Layout() {
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <ScrollToTop />
+      <Header />
+      <ServerStatus />
+      <main id="main" className="wrap">
+        <Outlet />
+      </main>
+      <Footer />
+    </>
+  );
+}
 
 export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="p/:id" element={<ProductPage />} />
-        <Route path="login" element={<AuthPage mode="login" />} />
-        <Route path="signup" element={<AuthPage mode="signup" />} />
-        <Route path="cart" element={<Guard><CartPage /></Guard>} />
-        <Route path="orders" element={<Guard><OrderList /></Guard>} />
-        <Route path="orders/:id" element={<Guard><OrderDetail /></Guard>} />
-        <Route path="success" element={<Guard><Success /></Guard>} />
-        <Route path="cancel" element={<Guard><Cancel /></Guard>} />
-        <Route path="stock" element={<Guard><StockDesk /></Guard>} />
+        <Route index element={<Shop />} />
+        <Route path="products/:id" element={<ProductPage />} />
+        <Route path="account" element={<AuthPage />} />
+        <Route path="bag" element={<RequireAuth><Bag /></RequireAuth>} />
+        <Route path="orders" element={<RequireAuth><Orders /></RequireAuth>} />
+        <Route path="orders/:id" element={<RequireAuth><OrderDetail /></RequireAuth>} />
+        <Route path="success" element={<RequireAuth><Success /></RequireAuth>} />
+        <Route path="cancel" element={<Cancel />} />
+        <Route path="admin/new-product" element={<NewProduct />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

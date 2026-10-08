@@ -1,18 +1,46 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import type { Product } from "../types";
-import { money } from "../format";
-import Plate from "./Plate";
-import Stock from "./Stock";
+import { useAddToBag } from "../hooks";
+import { stockNote } from "../lib/format";
+import type { Product } from "../lib/types";
+import { Plate } from "./Plate";
+import { Price } from "./Price";
 
-export default function ProductCard({ p }: { p: Product }) {
+export function ProductCard({ product }: { product: Product }) {
+  const addToBag = useAddToBag();
+  const [busy, setBusy] = useState(false);
+  const soldOut = product.inventory <= 0;
+  const note = stockNote(product.inventory);
+
+  async function add() {
+    setBusy(true);
+    await addToBag(product.id);
+    setBusy(false);
+  }
+
   return (
-    <Link to={`/p/${p.id}`} className={`card ${p.inventory === 0 ? "soldout" : ""}`}>
-      <div className="card-art"><Plate seed={p.id} label={p.name} />{p.inventory === 0 && <span className="stamp">Sold out</span>}</div>
-      <div className="card-body">
-        <h3>{p.name}</h3>
-        <span className="price">{money(p.price)}</span>
+    <article className="card">
+      <div className="card__media">
+        <Plate seed={product.id} soldOut={soldOut} />
+        {!soldOut && (
+          <button
+            type="button"
+            className="btn btn--solid btn--small card__add"
+            disabled={busy}
+            onClick={add}
+            aria-label={`Add ${product.name} to bag`}
+          >
+            {busy ? "Adding…" : "Add to bag"}
+          </button>
+        )}
       </div>
-      <Stock n={p.inventory} />
-    </Link>
+      <div className="card__info">
+        <h3 className="card__name">
+          <Link to={`/products/${product.id}`}>{product.name}</Link>
+        </h3>
+        <Price value={product.price} />
+      </div>
+      {note && <p className={`card__stock${soldOut ? " card__stock--out" : ""}`}>{note}</p>}
+    </article>
   );
 }
