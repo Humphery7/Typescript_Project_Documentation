@@ -4,6 +4,13 @@ A production-grade full-stack e-commerce application comprising an Express/TypeS
 
 ---
 
+## Live Deployments
+
+- **Storefront (Frontend)**: [https://meridianfrontend-btrjfjjyv-faradayotuoniyo-gmailcoms-projects.vercel.app/](https://meridianfrontend-btrjfjjyv-faradayotuoniyo-gmailcoms-projects.vercel.app/)
+- **REST API (Backend)**: [https://meridianbackend.vercel.app/](https://meridianbackend.vercel.app/)
+
+---
+
 ## Repository Structure
 
 ```text
