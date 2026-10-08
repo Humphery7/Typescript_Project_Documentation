@@ -1,60 +1,62 @@
-# E-Commerce Application (API & Storefront)
+# Full-Stack E-Commerce Platform
 
-A modern full-stack e-commerce application built with a **Node.js/Express TypeScript REST API** backend, **PostgreSQL** database, **Stripe Checkout** payment processing, and a **React 19 + Vite** storefront frontend.
+A production-grade full-stack e-commerce application comprising an Express/TypeScript RESTful API backend, a PostgreSQL database, Stripe Checkout integration, and a React 19 + Vite storefront.
 
 ---
 
-## 📁 Project Structure
+## Repository Structure
 
 ```text
 EcommerceAPI/
-├── ecommerce_api_backend/     # Express.js + TypeScript + PostgreSQL REST API
-└── frontend/                  # React 19 + Vite + TypeScript Storefront Web App
+├── ecommerce_api_backend/     # Express.js, TypeScript, PostgreSQL REST API
+└── frontend/                  # React 19, Vite, TypeScript Storefront Application
 ```
 
 ---
 
-## 🚀 Features & Architecture
+## Architecture and Technical Overview
 
-### ⚙️ Backend (`ecommerce_api_backend`)
-- **Express 5 & TypeScript**: Built with strict type checking, ESM module resolution, and structured routing (`/api/v1`).
-- **PostgreSQL Database**: Data persistence using native `pg` client with pooled connection support (compatible with Neon serverless Postgres).
-- **Authentication**: User registration and login using `bcrypt` password hashing and `jsonwebtoken` (JWT) authorization.
-- **Product Catalog**: Dynamic product listings, detailed view, inventory management, and database seeding script (1,000+ realistic products).
-- **Cart & Orders**: Cart session management per user, stock overflow validation, atomic PostgreSQL transaction checkout, and order history.
-- **Stripe Checkout**: Redirect-based payment flow via official Stripe API.
+### Backend (`ecommerce_api_backend`)
+- **Framework & Language**: Express 5 on Node.js using TypeScript with strict type checking and native ESM resolution.
+- **Database Layer**: PostgreSQL via the native `pg` client using pooled connection management, fully compatible with serverless connection pooling (Neon).
+- **Authentication**: JWT (JSON Web Tokens) with standard Bearer authorization headers and `bcrypt` password hashing.
+- **E-Commerce Domain Engine**: Modular routing (`/api/v1`) handling user authentication, product catalog search, inventory checks, cart management, and atomic checkout transactions.
+- **Payment Processing**: Integrated with Stripe Checkout for secure redirect payment flows and webhooks.
+- **Data Seeding**: Built-in seeding script generating scalable sample catalog items with realistic categorization and pricing.
 
-### 🎨 Frontend (`frontend`)
-- **React 19 & Vite 8**: Lightning-fast single-page application with hot module replacement and Hanken Grotesk typography.
-- **React Router v7**: Client-side navigation for catalog browsing, product details, user authentication, and shopping bag.
-- **Context API**: Global state management for shopping cart persistence and user authentication tokens.
-- **API Integration**: Connected to backend API routes (`/api/v1`) with configurable environment variables.
-
----
-
-## 🛠️ Prerequisites
-
-- **Node.js**: `v20.x` or `v22.12.0+`
-- **npm**: `v9.x` or higher
-- **PostgreSQL**: Local database or cloud provider (e.g., [Neon Postgres](https://neon.tech))
-- **Stripe Account**: Test key from [Stripe Dashboard](https://dashboard.stripe.com)
+### Frontend (`frontend`)
+- **Framework & Build System**: React 19 SPA powered by Vite for fast bundle builds and hot module reloading.
+- **Routing & State**: React Router v7 for client-side navigation alongside Context API for cart and user state persistence.
+- **Design System**: Responsive interface built with custom CSS utilities and typography from Hanken Grotesk.
+- **API Client**: Asynchronous fetch handlers connecting to backend API routes configured via environment variables.
 
 ---
 
-## ⚙️ Environment Configuration
+## Prerequisites
 
-### 1. Backend (`ecommerce_api_backend/.env`)
-Create a `.env` file in `ecommerce_api_backend/`:
+- **Node.js**: Version 20.x or 22.12.0+
+- **npm**: Version 9.x or higher
+- **PostgreSQL**: Local instance or managed provider (e.g., Neon Postgres)
+- **Stripe Account**: Secret key for test mode payment processing
+
+---
+
+## Environment Configuration
+
+### Backend Configuration (`ecommerce_api_backend/.env`)
+
+Create a `.env` file inside `ecommerce_api_backend/`:
 
 ```env
 PORT=3000
 DATABASE_URL="postgresql://user:password@host/dbname?sslmode=require"
-JWT_SECRET="your_jwt_secret_key"
+JWT_SECRET="your_secure_jwt_secret"
 STRIPE_SECRET_KEY="sk_test_your_stripe_secret_key"
 ```
 
-### 2. Frontend (`frontend/.env`)
-Create a `.env` file in `frontend/`:
+### Frontend Configuration (`frontend/.env`)
+
+Create a `.env` file inside `frontend/`:
 
 ```env
 VITE_API_URL=http://localhost:3000
@@ -65,70 +67,78 @@ VITE_STRIPE_TEST_HINT=true
 
 ---
 
-## 💻 How to Run Locally
+## Local Development Setup
 
-### Step 1: Install Dependencies
-Install packages for both the backend and frontend:
+### 1. Install Dependencies
+
+Install required packages for both subprojects:
 
 ```bash
-# Install backend dependencies
+# Backend dependencies
 cd ecommerce_api_backend
 npm install
 
-# Install frontend dependencies
+# Frontend dependencies
 cd ../frontend
 npm install
 ```
 
-### Step 2: Seed the Database (Optional but Recommended)
-Populate your PostgreSQL database with realistic sample products:
+### 2. Seed the Database
+
+Populate your database with sample catalog items:
 
 ```bash
 cd ecommerce_api_backend
 npm run seed
 ```
 
-### Step 3: Start the Backend Server
-Run the Express development server (runs on `http://localhost:3000` by default):
+### 3. Start the Backend API
+
+Run the development API server (default port `3000`):
 
 ```bash
 cd ecommerce_api_backend
 npm run dev
 ```
 
-### Step 4: Start the Frontend Application
-In a new terminal window, start the Vite development server (runs on `http://localhost:5173` by default):
+### 4. Start the Storefront Frontend
+
+In a separate terminal window, start the Vite development server (default port `5173`):
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-Open your browser and navigate to `http://localhost:5173`.
+Access the storefront in your browser at `http://localhost:5173`.
 
 ---
 
-## 🧪 Available Scripts
+## Available Scripts
 
 ### Backend (`ecommerce_api_backend`)
-- `npm run dev`: Starts dev server with live auto-reload via `tsx`.
-- `npm start`: Starts production server.
-- `npm run seed`: Seeds the database with products.
-- `npm test`: Runs integration flow test script.
+- `npm run dev`: Starts the API development server with live reload via `tsx`.
+- `npm start`: Runs the server in production mode.
+- `npm run seed`: Executes the database product seeding procedure.
+- `npm test`: Runs integration testing scripts.
 
 ### Frontend (`frontend`)
-- `npm run dev`: Launches Vite development server.
-- `npm run build`: Type-checks and builds production bundle in `dist/`.
-- `npm run preview`: Previews local production build.
-- `npm run test`: Runs unit and component tests via Vitest.
+- `npm run dev`: Starts the Vite development server.
+- `npm run build`: Type-checks and compiles the production bundle in `dist/`.
+- `npm run preview`: Serves the production build locally.
+- `npm run test`: Executes unit tests using Vitest.
 
 ---
 
-## ☁️ Deployment
+## Deployment
 
-- **Backend**: Can be deployed to platforms like Vercel, Render, or Railway with environment variables (`DATABASE_URL`, `JWT_SECRET`, `STRIPE_SECRET_KEY`).
-- **Frontend**: Can be deployed to Vercel via CLI:
-  ```bash
-  cd frontend
-  vercel --prod
-  ```
+### Backend Deployment
+The backend API can be deployed to Node.js hosting environments such as Vercel, Render, or AWS App Runner. Ensure all environment variables (`DATABASE_URL`, `JWT_SECRET`, `STRIPE_SECRET_KEY`) are set in the project configuration.
+
+### Frontend Deployment
+The storefront application can be deployed using the Vercel CLI:
+
+```bash
+cd frontend
+vercel --prod
+```
