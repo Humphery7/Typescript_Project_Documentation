@@ -25,10 +25,10 @@ Typescript_Project_Documentation/
 ```
 
 ### Deployed Links (`EcommerceAPI`)
-- **Frontend (meridian)**: [project URL](https://meridianfrontend-btrjfjjyv-faradayotuoniyo-gmailcoms-projects.vercel.app/)
+- **Frontend (meridian)**: [https://meridianfrontend-btrjfjjyv-faradayotuoniyo-gmailcoms-projects.vercel.app/](https://meridianfrontend-btrjfjjyv-faradayotuoniyo-gmailcoms-projects.vercel.app/)
 - **Backend (REST API)**: [https://meridianbackend.vercel.app/](https://meridianbackend.vercel.app/)
 
-
+project URL = https://roadmap.sh/projects/ecommerce-api
 ---
 
 ## Technical Standards
